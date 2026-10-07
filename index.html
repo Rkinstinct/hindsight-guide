@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="#030304" name="theme-color"/><meta content="מה זה Hindsight וזיכרון סוכנים, ואיך משלבים אותו בסוכן או בפרויקט ספציפי: Claude Code, MCP, פייתון ו-LangGraph." name="description"/><meta content="Hindsight - מדריך שילוב בסוכן ובפרויקט" property="og:title"/><meta content="מה זה Hindsight וזיכרון סוכנים, ואיך משלבים אותו בסוכן או בפרויקט ספציפי: Claude Code, MCP, פייתון ו-LangGraph." property="og:description"/><title>Hindsight - מדריך שילוב בסוכן ובפרויקט | DATA&amp;AI</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/><style>
+:root{--bg:#030304;--surface:#0f1115;--surface2:#171a20;--line:#303641;--orange:#F7931A;--gold:#FFD600;--text:#f7f8fa;--muted:#b5c0cf;color-scheme:dark}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:85px}body{margin:0;background:radial-gradient(ellipse at 8% 0%,#331b08 0,transparent 31%),var(--bg);color:var(--text);font:16px/1.8 'Heebo',sans-serif}a{color:var(--orange);text-underline-offset:4px}a:hover{color:var(--gold)}a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:3px}.wrap{max-width:1120px;width:calc(100% - 36px);margin:auto}.top{position:sticky;top:0;background:#030304d9;backdrop-filter:blur(16px);border-bottom:1px solid var(--line);z-index:10}.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:66px}.brand{font-family:'Space Grotesk','Heebo';font-weight:700;color:#fff;text-decoration:none;white-space:nowrap}.brand b{color:var(--orange)}nav{display:flex;gap:14px;overflow:auto;scrollbar-width:none;white-space:nowrap}nav a{font-size:.84rem;color:var(--muted);text-decoration:none;min-height:44px;display:flex;align-items:center}.hero{padding:76px 0 60px;border-bottom:1px solid var(--line)}.kicker,.eyebrow{font:600 .76rem 'JetBrains Mono','Heebo',monospace;color:var(--orange);letter-spacing:.06em}.hero h1{font:700 clamp(2.8rem,8vw,5.5rem)/1.1 'Space Grotesk','Heebo';margin:15px 0;letter-spacing:-.04em}.hero h1 span{background:linear-gradient(90deg,var(--orange),var(--gold));color:transparent;background-clip:text}.lead{max-width:750px;color:#d2d9e3;font-size:1.16rem}.chips{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0}.chip{border:1px solid #61431e;background:#35220d88;color:var(--gold);border-radius:999px;padding:4px 13px;font:.78rem 'JetBrains Mono','Heebo'}.cta{display:inline-block;background:linear-gradient(110deg,#ee720e,var(--orange));color:#171007;border-radius:999px;padding:10px 20px;text-decoration:none;font-weight:800;min-height:44px}.section{padding:56px 0;border-bottom:1px solid #24282f}.section h2{font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.2;margin:8px 0 18px}.section h3{font-size:1.2rem;margin:24px 0 8px}.section p,.section li{color:#d0d8e1}.section ul,.section ol{padding-inline-start:23px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card,.note{border:1px solid #554124;background:linear-gradient(140deg,#1e1a15,#0f1115 56%);box-shadow:inset 0 1px #ffffff15,0 18px 40px #0005;border-radius:18px;padding:23px;min-width:0}.card h3{margin:5px 0}.card p{margin:5px 0}.note{border-color:#624c24;margin:17px 0}.note strong{color:var(--gold)}pre{direction:ltr;text-align:left;overflow-x:auto;background:#090b0f;border:1px solid #354052;border-radius:12px;padding:16px;color:#ffe2ae;font:13px/1.65 'JetBrains Mono',monospace}code{font-family:'JetBrains Mono',monospace;color:#ffd799;unicode-bidi:isolate}table{width:100%;border-collapse:collapse;min-width:650px}th,td{text-align:right;border-bottom:1px solid #354052;padding:11px;vertical-align:top}th{color:var(--gold)}.table-wrap{overflow-x:auto}details{margin:11px 0;border:1px solid var(--line);border-radius:12px;padding:11px 16px;background:#11141a}summary{cursor:pointer;font-weight:700;min-height:35px}.small{font-size:.86rem;color:var(--muted)}footer{padding:32px 0;color:var(--muted);font-size:.85rem}footer .wrap{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}@media(max-width:700px){.top .wrap{display:block;padding:10px 0}.brand{display:block}nav{gap:17px}.hero{padding:48px 0}.grid{grid-template-columns:1fr}.section{padding:42px 0}body{font-size:15px}pre{font-size:12px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}.toc a{border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.85rem;color:var(--muted);text-decoration:none}
+.steps{counter-reset:s;list-style:none;padding:0}.steps li{counter-increment:s;position:relative;padding:12px 56px 12px 0;margin:10px 0;border-bottom:1px solid #24282f}.steps li:before{content:counter(s);position:absolute;right:0;top:12px;width:36px;height:36px;border-radius:50%;background:#35220d;border:1px solid #61431e;color:var(--gold);display:grid;place-items:center;font:700 .95rem 'JetBrains Mono'}
+.tool h2{margin-top:0}.warn{border-color:#7a3b2a!important}.warn strong{color:#ff9d7a!important}
+</style></head><body><a class="small" href="#main" onblur="this.style.top='-120px'" onfocus="this.style.top='8px'" style="position:absolute;top:-120px">דלג לתוכן</a><header class="top"><div class="wrap"><a class="brand" href="https://rkinstinct.github.io/data-ai-hub/">DATA<span style="color:#F7931A">&amp;</span>AI <b>/ HINDSIGHT</b></a><nav aria-label="ניווט"><a href="#what">מה זה</a><a href="#concepts">מושגים</a><a href="#run">שרת</a><a href="#claude-code">Claude Code</a><a href="#mcp">MCP</a><a href="#code">קוד</a><a href="#frameworks">LangGraph</a><a href="#limits">מגבלות</a><a href="#sources">מקורות</a></nav></div></header><main id="main"><div class="hero"><div class="wrap"><div class="kicker">FIELD GUIDE / 07.10.2026</div><h1><span>Hindsight</span><br/>זיכרון שלומד, בתוך הסוכן שלך</h1><p class="lead">מה זה Hindsight, איך הוא שונה מחיפוש וקטורי, ואיך מחברים אותו לסוכן ספציפי או לפרויקט ספציפי: Claude Code, MCP ידני, סוכן בפייתון ו-LangGraph. עם פקודות וקוד מהתיעוד הרשמי.</p><div class="chips"><span class="chip">MIT</span><span class="chip">retain · recall · reflect</span><span class="chip">בנק לכל פרויקט</span></div><a class="cta" href="#claude-code">לשילוב בפרויקט ←</a></div></div><section class="section " id="what"><div class="wrap"><div class="eyebrow">WHAT IS IT</div><h2>מה זה Hindsight</h2><p>Hindsight הוא מערכת זיכרון לסוכני AI, קוד פתוח (רישיון MIT) של Vectorize. המטרה שלה מוגדרת בתיעוד כך: סוכן שלומד לאורך זמן, לא רק סוכן שזוכר היסטוריית שיחה. בניגוד לחיפוש וקטורי רגיל, היא מחלצת עובדות, ישויות וקשרים, ומאחדת אותם ל"אמונות" שמתעדכנות כשמגיע מידע חדש.</p>
+<div class="grid"><div class="card"><h3>שלוש פעולות</h3><p><code>retain</code> שומר מידע. <code>recall</code> שולף זיכרונות. <code>reflect</code> חושב על הזיכרון ומחזיר תשובה מנומקת.</p></div><div class="card"><h3>בנק זיכרון (bank)</h3><p>מאגר מבודד אחד: למשתמש, לסוכן או לפרויקט. אין דליפה בין בנקים. זה המפתח לשאלה "איך משלבים בסוכן או בפרויקט ספציפי".</p></div><div class="card"><h3>ארבעה סוגי זיכרון</h3><p>עובדות על העולם, חוויות של הסוכן, תצפיות (אמונות מאוחדות עם ראיות) ומודלים מנטליים (תשובה עומדת לשאלה קבועה).</p></div><div class="card"><h3>איפה זה רץ</h3><p>שרת Docker או pip מעל PostgreSQL עם pgvector, Kubernetes, או שירות ענן מנוהל. אפשר גם מצב מקומי מוטמע בלי שרת.</p></div></div>
+<div class="note"><strong>מצב נכון ל-07.10.2026:</strong> גרסה יציבה אחרונה v0.10.2 (29.09.2026), כ-46.7 אלף כוכבים. המאגר: <a href="https://github.com/vectorize-io/hindsight">vectorize-io/hindsight</a>.</div></div></section><section class="section " id="concepts"><div class="wrap"><div class="eyebrow">HOW IT THINKS</div><h2>איך הוא חושב: retain, recall, reflect</h2><h3>retain - שמירה</h3><p>Hindsight משתמש ב-LLM כדי לחלץ מהטקסט עובדות, תאריכים, ישויות וקשרים, ומנרמל אותם. לכן שמירה עולה טוקנים של מודל חילוץ. אפשר להעביר <code>context</code> (על מה זה) ו-<code>timestamp</code>.</p>
+<h3>recall - שליפה</h3><p>ארבע אסטרטגיות במקביל: סמנטית (וקטורים), מילות מפתח (BM25), גרף (ישויות, זמן, סיבתיות) וטמפורלית (טווח זמן). התוצאות ממוזגות ומדורגות מחדש, ואז נחתכות לתקציב הטוקנים שביקשת.</p>
+<h3>reflect - הסקה</h3><p>לא שליפה אלא חשיבה: "אילו סיכונים פתוחים בפרויקט?", "למה הודעות מסוימות קיבלו תגובה?". התשובה מושפעת מהמשימה ומתכונות האופי של הבנק (ספקנות, דקדקנות, אמפתיה).</p>
+<h3>תצפיות ומודלים מנטליים</h3><p>ברקע, עובדות קשורות מתאחדות לתצפיות עם ראיות וספירת הוכחות. מודל מנטלי הוא תשובה קבועה לשאלה ("מה ההעדפות של המשתמש?") שנכתבת מחדש ברקע, וקריאתה היא קריאת מסד נתונים בלי LLM. כך סוכן יכול להתחיל סשן עם דף ידע מוכן.</p>
+<div class="note"><strong>שפה:</strong> לפי התיעוד הכלי שומר את שפת הקלט (גם עברית) מקצה לקצה, ושמות ישויות נשארים בכתב המקורי.</div></div></section><section class="section " id="run"><div class="wrap"><div class="eyebrow">STEP 1</div><h2>שלב 1: להרים שרת זיכרון</h2><p>לפני כל חיבור צריך מקום שבו הזיכרון חי. שלוש אפשרויות מהתיעוד:</p>
+<h3>Docker (מומלץ בתיעוד)</h3><pre><code>export OPENAI_API_KEY=sk-xxx
+
+docker run -it --pull always --name hindsight --restart unless-stopped \
+  -p 8888:8888 -p 9999:9999 \
+  -e HINDSIGHT_API_LLM_API_KEY=$OPENAI_API_KEY \
+  -v hindsight-data:/home/hindsight/.pg0 \
+  ghcr.io/vectorize-io/hindsight:latest</code></pre><p>ה-API יושב על <code>http://localhost:8888</code> והממשק הגרפי על <code>http://localhost:9999</code>. ספק המודל נקבע ב-<code>HINDSIGHT_API_LLM_PROVIDER</code>. נתמכים מעל 25 ספקים, כולל OpenAI, Anthropic, Gemini, וגם מקומיים כמו Ollama.</p>
+<h3>בלי שרת: מצב מוטמע בפייתון</h3><pre><code>pip install hindsight-all -U
+
+import os
+from hindsight import HindsightServer, HindsightClient
+
+with HindsightServer(
+    llm_provider=&quot;openai&quot;,
+    llm_model=&quot;gpt-5-mini&quot;,
+    llm_api_key=os.environ[&quot;OPENAI_API_KEY&quot;],
+) as server:
+    client = HindsightClient(base_url=server.url)
+    client.retain(bank_id=&quot;my-bank&quot;, content=&quot;Alice works at Google&quot;)
+    print(client.recall(bank_id=&quot;my-bank&quot;, query=&quot;Where does Alice work?&quot;))</code></pre><h3>שירות מנוהל</h3><p>Hindsight Cloud, בחיוב לפי שימוש עם קרדיט התחלתי. כל לקוח מצביע ל-<code>https://api.hindsight.vectorize.io</code> עם מפתח API. לא נבדק כאן המחיר המדויק, ראו את דף התמחור.</p>
+<div class="note warn"><strong>עלות ופרטיות:</strong> החילוץ רץ דרך LLM. במצב עם ספק ענן, טקסט מהשיחות שלך נשלח לאותו ספק. מי שרוצה שהכול יישאר במחשב צריך מודל מקומי.</div></div></section><section class="section " id="claude-code"><div class="wrap"><div class="eyebrow">INTEGRATION A</div><h2>שילוב א: סוכן קוד (Claude Code) בפרויקט ספציפי</h2><p>זה המסלול הקצר לפרויקט קוד. חבילה אחת, <code>@vectorize-io/hindsight-coding-agents</code>, מחברת את Claude Code, Codex, Cursor, Copilot, opencode ועוד. לכל ריפו נוצר בנק משלו בשם <code>coding-agent::&lt;שם-הריפו&gt;</code>, והוא מוזן אוטומטית מהיסטוריית git וממה שהסוכן עשה בסשנים קודמים.</p>
+<ol class="steps"><li><strong>התקנה</strong> מתוך תיקיית הפרויקט. בלי יעד מפורש הפקודה לא משנה כלום:<pre><code>cd ~/work/payments-api
+npx @vectorize-io/hindsight-coding-agents install claude-code</code></pre></li>
+<li><strong>בחירת מקום הזיכרון</strong> (נשאל פעם אחת): <code>cloud</code>, שרת שאתה מריץ, או <code>daemon</code> מקומי שדורש <code>uv</code> ומפתח LLM לחילוץ. בלי אינטראקציה:<pre><code>npx @vectorize-io/hindsight-coding-agents install claude-code \
+  --server self-hosted --api-url http://localhost:8888</code></pre></li>
+<li><strong>מה נכתב:</strong> שלושה hooks ב-<code>~/.claude/settings.json</code>, שרת MCP דרך <code>claude mcp add</code> ברמת משתמש, וסקיל נלווה. אין פקודת הפעלה: ה-hook של תחילת סשן עושה את העבודה.</li>
+<li><strong>מגביל לפרויקטים שבחרת</strong> בקובץ <code>~/.hindsight/coding-agent.json</code>. כברירת מחדל כל פרויקט מקבל זיכרון; כך מכבים את זה בכל מקום ומאשרים רק תיקיות מסוימות:<pre><code>{
+  &quot;optInOnly&quot;: true,
+  &quot;optInPaths&quot;: [&quot;~/work/payments-api&quot;]
+}</code></pre></li>
+<li><strong>בנק בשם שאתה קובע</strong> לפרויקט (נתיב מוחלט למפה, הקידומת הארוכה מנצחת):<pre><code>{
+  &quot;mapPathToBank&quot;: {
+    &quot;/Users/me/work/payments-api&quot;: &quot;payments-api-prod&quot;
+  },
+  &quot;retainTags&quot;: [&quot;project:{gitProject}&quot;]
+}</code></pre></li>
+<li><strong>סוכן אחד בלבד:</strong> אם רוצים למשל זיכרון כבוי רק ב-Claude Code:<pre><code>{
+  &quot;harnesses&quot;: { &quot;claude-code&quot;: { &quot;disabled&quot;: true } }
+}</code></pre></li></ol>
+<h3>מה קורה בפועל</h3><p>בפתיחת סשן הבנק מוזן מכל הודעות ה-commit וממסמכי שיחה קודמים, ונבנים דפי ידע (מפת רכיבים, מוסכמות, החלטות ונימוקים). בהודעה הראשונה בסשן מוזרק לסוכן תקציר reflect קטן של מה שהפרויקט כבר החליט. אחרי כל תשובה נשמר חלק מהשיחה חזרה לבנק. הסוכן מקבל גם כלי MCP: <code>hindsight_search_knowledge_pages</code>, <code>hindsight_reflect</code> ועוד.</p>
+<div class="grid"><div class="card"><h3>הגדרות שכדאי להכיר</h3><p><code>autoInject</code> קובע מה מוזרק: reflect (ברירת מחדל), pages, recall או none. <code>retainExtractionMode</code> קובע עלות: concise הוא ברירת המחדל, verbose יקר פי כמה.</p></div><div class="card"><h3>הסרה</h3><p><code>npx @vectorize-io/hindsight-coding-agents uninstall claude-code</code> מסיר בדיוק מה שההתקנה הוסיפה, והיא גם גיבתה קבצים שנגעה בהם.</p></div></div>
+<div class="note warn"><strong>סביבה ארגונית נעולה:</strong> המסלול הזה כותב hooks ל-settings.json ומוסיף MCP. אם הארגון חוסם hooks, תוספים או שינוי הגדרות, השתמש בשילוב ב' (MCP ידני) במקום.</div>
+<div class="note"><strong>הערה:</strong> תוסף Claude Code הישן של Hindsight מסומן בתיעוד כמוחלף על ידי החבילה הזו. הוא עדיין עובד אבל לא מפותח, ובו כל הפרויקטים חלקו בנק אחד.</div></div></section><section class="section " id="mcp"><div class="wrap"><div class="eyebrow">INTEGRATION B</div><h2>שילוב ב: חיבור ידני דרך MCP, בנק אחד לכל פרויקט</h2><p>לכל בנק יש נקודת MCP משלו, <code>http://localhost:8888/mcp/{bank_id}/</code>, ולכן הבחירה בבנק היא בחירה בפרויקט: אין צורך שהכלים יקבלו מזהה. במצב בנק יחיד זמינים 27 כלים (זיכרון, מודלים מנטליים, directives, מסמכים, תגיות ועוד). הנקודה פתוחה כברירת מחדל, אלא אם הפעלת מפתח API בשרת.</p><pre><code># Claude Code, בנק לפי כותרת
+claude mcp add --transport http hindsight http://localhost:8888/mcp \
+  --header &quot;Authorization: Bearer your-secret-key&quot; \
+  --header &quot;X-Bank-Id: payments-api&quot;</code></pre><p>אותו דבר ב-Claude Desktop, בקובץ ההגדרות:</p><pre><code>{
+  &quot;mcpServers&quot;: {
+    &quot;hindsight&quot;: {
+      &quot;url&quot;: &quot;http://localhost:8888/mcp&quot;,
+      &quot;headers&quot;: {
+        &quot;Authorization&quot;: &quot;Bearer your-secret-key&quot;,
+        &quot;X-Bank-Id&quot;: &quot;payments-api&quot;
+      }
+    }
+  }
+}</code></pre><p>סדר העדיפויות בבחירת בנק: קודם הנתיב ב-URL, אחר כך הכותרת. כדי לקבוע שהסוכן ישמור ויזכור בהתאם לכללים שלך, הוסף הנחיות בשרת עם <code>HINDSIGHT_API_MCP_INSTRUCTIONS</code>, והן יתווספו לתיאורי הכלים retain ו-recall.</p>
+<div class="note"><strong>טיפ לפרויקט:</strong> כתוב בקובץ ההנחיות של הפרויקט (למשל CLAUDE.md) משפט כמו "בתחילת משימה קרא ל-recall על הנושא, ובסיומה שמור החלטות עם retain". בלי הנחיה כזו הסוכן משתמש בכלים רק לפעמים.</div></div></section><section class="section " id="code"><div class="wrap"><div class="eyebrow">INTEGRATION C</div><h2>שילוב ג: סוכן שאתה כותב בקוד (פייתון)</h2><p>כאן אתה שולט בדיוק מתי נשמר ומתי נשלף. הדפוס: אתחול בנק עם משימה (mission) ואופי, שליפה לפני כל קריאה למודל, שמירה אחריה.</p><pre><code>pip install hindsight-client -U
+
+from hindsight_client import Hindsight
+from openai import OpenAI
+
+hs = Hindsight(base_url=&quot;http://localhost:8888&quot;)
+llm = OpenAI()
+BANK = &quot;support-agent-acme&quot;          # בנק אחד לפרויקט / לקוח
+
+# פעם אחת: יצירת הבנק
+hs.create_bank(
+    bank_id=BANK,
+    name=&quot;Acme support agent&quot;,
+    mission=&quot;Support agent for Acme. Track customer issues, decisions and promised follow-ups.&quot;,
+    disposition={&quot;skepticism&quot;: 3, &quot;literalism&quot;: 3, &quot;empathy&quot;: 3},
+)
+
+def answer(user_msg: str) -&gt; str:
+    # 1. שליפה לפני ה-LLM
+    mem = hs.recall(bank_id=BANK, query=user_msg, max_tokens=2048, budget=&quot;mid&quot;)
+    context = &quot;\n&quot;.join(f&quot;- {r.text}&quot; for r in mem.results)
+
+    # 2. קריאה למודל עם הזיכרון בפרומפט
+    resp = llm.chat.completions.create(
+        model=&quot;gpt-5-mini&quot;,
+        messages=[
+            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: f&quot;Relevant memory:\n{context}&quot;},
+            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_msg},
+        ],
+    )
+    reply = resp.choices[0].message.content
+
+    # 3. שמירה אחרי
+    hs.retain(
+        bank_id=BANK,
+        content=f&quot;User: {user_msg}\nAgent: {reply}&quot;,
+        context=&quot;support conversation&quot;,
+        document_id=&quot;conversation_001&quot;,   # אותו מזהה = עדכון, לא כפילות
+        retain_async=True,
+    )
+    return reply</code></pre><p>לשאלות שדורשות חשיבה ולא שליפה (למשל "מה פתוח מול הלקוח הזה?") קרא ל-<code>hs.reflect(bank_id=BANK, query=..., budget="low")</code> והשתמש ב-<code>answer.text</code>.</p>
+<div class="grid"><div class="card"><h3>למה בנק לפי פרויקט</h3><p>הבידוד חזק: אין דליפה בין בנקים. לסוכן שמשרת כמה לקוחות, בנק לכל לקוח הוא הדרך הבטוחה.</p></div><div class="card"><h3>הטקסט הוא לא פקודה</h3><p>זיכרון שנשלף הוא נתון. הכנס אותו לפרומפט כ"הקשר", לא כהוראות, כדי שתוכן שנשמר בעבר לא יכתיב התנהגות.</p></div></div></div></section><section class="section " id="frameworks"><div class="wrap"><div class="eyebrow">INTEGRATION D</div><h2>שילוב ד: LangGraph, או עטיפה של שתי שורות</h2><h3>LangGraph / LangChain</h3><p>החבילה <code>hindsight-langgraph</code> מציעה שלושה דפוסים: כלים (retain, recall, reflect כ-tools), צמתי גרף שמזריקים זיכרון לפני המודל ושומרים אחריו, ו-BaseStore. בנק לפי משתמש נבחר בזמן ריצה מתוך ה-RunnableConfig.</p><pre><code>pip install hindsight-langgraph
+
+from hindsight_client import Hindsight
+from hindsight_langgraph import create_hindsight_tools
+
+client = Hindsight(base_url=&quot;http://localhost:8888&quot;)
+tools = create_hindsight_tools(
+    client=client,
+    bank_id=&quot;user-123&quot;,
+    include_reflect=False,   # בלי reflect אם לא צריך
+)
+# מעבירים את tools ל-create_react_agent או ל-bind_tools</code></pre><p>בצמתים: <code>create_recall_node(client=client, bank_id_from_config="user_id")</code> ו-<code>create_retain_node(...)</code>. אם Hindsight נופל, הצמתים רושמים לוג ולא מפילים את הגרף.</p>
+<h3>עטיפת לקוח LLM</h3><p>הדרך הקצרה לסוכן קיים: מחליפים את הלקוח בעטוף, והזיכרון נשלף ונשמר בכל קריאה.</p><pre><code>pip install hindsight-litellm
+
+from openai import OpenAI
+from hindsight_litellm import wrap_openai
+
+client = wrap_openai(
+    OpenAI(),
+    bank_id=&quot;user-123&quot;,
+    hindsight_api_url=&quot;http://localhost:8888&quot;,
+)</code></pre><p>יש גם <code>wrap_anthropic()</code>. בלי hindsight_api_url העטיפה פונה כברירת מחדל לענן של Hindsight, וזה חשוב אם לא רוצים שהמידע יצא מהמחשב.</p>
+<p>רשימת האינטגרציות הרשמית כוללת עוד מסגרות: CrewAI, Pydantic AI, OpenAI Agents SDK, Google ADK, n8n, Zapier, Dify ועוד.</p></div></section><section class="section " id="choose"><div class="wrap"><div class="eyebrow">WHICH ONE</div><h2>איזה שילוב מתאים למה</h2><div class="table-wrap"><table><thead><tr><th>המצב שלך</th><th>שילוב</th><th>למה</th></tr></thead><tbody><tr><td>פרויקט קוד עם Claude Code</td><td>א</td><td>בנק לריפו, מוזן מ-git, בלי כתיבת קוד</td></tr><tr><td>סביבה נעולה או סוכן שאינו קוד</td><td>ב (MCP ידני)</td><td>שינוי הגדרה אחד, בנק לפי כתובת</td></tr><tr><td>סוכן שנכתב בפייתון/TS</td><td>ג</td><td>שליטה מלאה במה נשמר ומתי</td></tr><tr><td>גרף LangGraph קיים</td><td>ד</td><td>צמתים מוכנים ובנק לפי משתמש</td></tr><tr><td>רוצה הוכחת היתכנות מהירה</td><td>ד (עטיפה)</td><td>שתי שורות, בלי שינוי לוגיקה</td></tr></tbody></table></div></div></section><section class="section " id="verify"><div class="wrap"><div class="eyebrow">VERIFY</div><h2>איך בודקים שזה עובד</h2><ol class="steps"><li>אחרי ההתקנה פתח סשן חדש, ספר לסוכן החלטה מפורשת ("נעגל רק את הסכום הסופי, לא שורות"), וסגור.</li><li>פתח סשן נוסף באותו פרויקט ושאל מה סוכם. זכור שהעיבוד ברקע, ולכן בשנייה הראשונה אחרי השמירה אולי עוד אין תוצאה.</li><li>פתח את הממשק ב-<code>http://localhost:9999</code> וחפש את הבנק. אתה אמור לראות עובדות, ישויות ותצפיות.</li><li>בשילוב א, הכלי <code>hindsight_diagnose</code> מדווח מה הקובץ אומר ומה הלקוח הרץ באמת משתמש בו.</li></ol>
+<div class="note"><strong>Memory Defense:</strong> מדיניות אופציונלית לכל בנק שסורקת כל retain לסודות ומידע אישי (45 תבניות) ומטשטשת או חוסמת לפני שמירה. כדאי להפעיל בפרויקט שבו הסוכן רואה מפתחות.</div></div></section><section class="section " id="limits"><div class="wrap"><div class="eyebrow">LIMITS</div><h2>מגבלות ומה לא בדקנו</h2><ul><li>העלות היא של מודל החילוץ והאיחוד ברקע, ולא של האחסון. ככל שמשתמשים ב-verbose או שומרים הרבה, היא גדלה.</li><li>הפרסום של Hindsight על דיוק (LongMemEval) הוא מהתיעוד שלהם, ושוחזר לפי הטענה על ידי Virginia Tech ו-Washington Post. לא בדקנו בעצמנו.</li><li>ב-LangGraph BaseStore: הקריאה <code>get</code> מבוססת recall, ו-<code>delete</code> אינו מוחק בפועל. זה מתועד.</li><li>המדריך נכתב מהתיעוד ולא מהרצה על מחשב. לפני שימוש בפרויקט אמיתי הרץ קודם על ריפו ניסיון.</li></ul></div></section><section class="section" id="sources"><div class="wrap"><div class="eyebrow">SOURCES</div><h2>מקורות</h2><ul><li><a href="https://github.com/vectorize-io/hindsight">vectorize-io/hindsight</a> ו-<a href="https://raw.githubusercontent.com/vectorize-io/hindsight/main/README.md">README</a> (גרסה v0.10.2).</li><li><a href="https://hindsight.vectorize.io/">תיעוד Hindsight</a>, <a href="https://hindsight.vectorize.io/sdks/integrations/coding-agents">Coding Agents</a>, <a href="https://hindsight.vectorize.io/developer/mcp-server">MCP Server</a>, <a href="https://hindsight.vectorize.io/sdks/python">Python SDK</a>, <a href="https://hindsight.vectorize.io/sdks/integrations/langgraph">LangGraph</a>, <a href="https://hindsight.vectorize.io/sdks/integrations/litellm">LiteLLM</a>, <a href="https://hindsight.vectorize.io/sdks/integrations/claude-code">תוסף Claude Code הישן</a>.</li><li><a href="https://arxiv.org/abs/2512.12818">המאמר</a> ו-<a href="https://benchmarks.hindsight.vectorize.io/">benchmarks</a>.</li></ul><a class="cta" href="https://rkinstinct.github.io/data-ai-hub/">חזרה ל-DATA&amp;AI Hub ←</a></div></section></main><footer><div class="wrap"><span>Hindsight field guide · 07.10.2026</span><span>מדריך עצמאי, לא פרסום רשמי של הפרויקטים. הפקודות נלקחו מהתיעוד הרשמי ולא הורצו בהתקנה חיה.</span></div><p class="rights-line" style="text-align:center;margin:18px auto 0;padding:0 16px;font-size:.92em;opacity:.9;color:inherit;width:100%;flex-basis:100%">© כל הזכויות שמורות לראובן קזורר</p></footer></body></html>
